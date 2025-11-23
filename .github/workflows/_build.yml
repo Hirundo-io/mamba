@@ -106,7 +106,7 @@ jobs:
           export TORCH_CUDA_VERSION=$(python -c "from os import environ as env; \
             minv = {'2.4': 118, '2.5': 118, '2.6': 118, '2.7': 118, '2.8': 126, '2.9': 126}[env['MATRIX_TORCH_VERSION']]; \
             maxv = {'2.4': 124, '2.5': 124, '2.6': 126, '2.7': 128, '2.8': 129, '2.9': 129}[env['MATRIX_TORCH_VERSION']]; \
-            mn = mins[torch]; mx = maxs[torch]; \
+            mn = minv[torch]; mx = maxv[torch]; \
             print(min(mx, max(mn, cuda)))" \
           )
           if [[ ${{ inputs.torch-version }} == *"dev"* ]]; then
