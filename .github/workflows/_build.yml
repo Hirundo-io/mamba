@@ -104,9 +104,11 @@ jobs:
           # e.g. we can have system CUDA version being 11.7 but if torch==1.12 then we need to download the wheel from cu116
           # This code is ugly, maybe there's a better way to do this.
           export TORCH_CUDA_VERSION=$(python -c "from os import environ as env; \
-            minv = {'2.4': 118, '2.5': 118, '2.6': 118, '2.7': 118, '2.8': 126, '2.9': 126}[env['MATRIX_TORCH_VERSION']]; \
-            maxv = {'2.4': 124, '2.5': 124, '2.6': 126, '2.7': 128, '2.8': 129, '2.9': 129}[env['MATRIX_TORCH_VERSION']]; \
-            mn = minv[torch]; mx = maxv[torch]; \
+            torch = env['MATRIX_TORCH_VERSION']; \
+            cuda = int(env['MATRIX_CUDA_VERSION']); \
+            mins = {'2.4': 118, '2.5': 118, '2.6': 118, '2.7': 118, '2.8': 126, '2.9': 126}; \
+            maxs = {'2.4': 124, '2.5': 124, '2.6': 126, '2.7': 128, '2.8': 129, '2.9': 129}; \
+            mn = mins[torch]; mx = maxs[torch]; \
             print(min(mx, max(mn, cuda)))" \
           )
           if [[ ${{ inputs.torch-version }} == *"dev"* ]]; then
