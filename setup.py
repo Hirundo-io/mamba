@@ -399,7 +399,7 @@ setup(
         "einops",
         "triton>=3.5.0",
         "transformers",
-        "tilelang==0.1.9",
+        "tilelang>=0.1.9,<0.1.10",
         "apache-tvm-ffi<0.1.10",
         "quack-kernels>=0.3.4",
         # "causal_conv1d>=1.4.0",
