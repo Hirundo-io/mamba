@@ -134,6 +134,16 @@ jobs:
           python -c "from torch.utils import cpp_extension; print (cpp_extension.CUDA_HOME)"
         shell: bash
 
+      - name: Use C++20 for torch >= 2.12
+        # torch >= 2.12 ships ATen headers that require C++20
+        # ("#error C++20 or later compatible compiler is required to use ATen"),
+        # but this project's setup.py hard-codes -std=c++17.
+        run: |
+          if [ "$(echo "$MATRIX_TORCH_VERSION" | cut -d. -f2)" -ge 12 ]; then
+            sed -i 's/std=c++17/std=c++20/g' setup.py
+            grep -n 'std=c++' setup.py || true
+          fi
+
       - name: Build wheel
         id: build_wheel
         env: 
